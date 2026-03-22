@@ -23,6 +23,9 @@
             display: flex;
             align-items: center;
             gap: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .logo {
@@ -84,23 +87,21 @@
             color: #999;
         }
 
-        /* Split layout */
+        /* Split layout - NO separate scroll */
         .split-container {
             display: flex;
-            height: calc(100vh - 130px);
+            min-height: calc(100vh - 130px);
         }
 
         .panel {
             flex: 1;
-            display: flex;
-            flex-direction: column;
             border-right: 1px solid #e5e5e5;
             background: #fff;
         }
 
         .panel:last-child { border-right: none; }
 
-        /* Panel header */
+        /* Panel header - sticky */
         .panel-header {
             padding: 14px 20px;
             border-bottom: 1px solid #eee;
@@ -108,6 +109,9 @@
             align-items: center;
             gap: 10px;
             background: #fafafa;
+            position: sticky;
+            top: 62px;
+            z-index: 50;
         }
 
         .panel-badge {
@@ -131,10 +135,8 @@
             color: #333;
         }
 
-        /* Products scroll */
-        .products-scroll {
-            flex: 1;
-            overflow-y: auto;
+        /* Products area - normal flow */
+        .products-area {
             padding: 16px;
             background: #f8f8f8;
         }
@@ -178,7 +180,6 @@
             padding: 12px;
         }
 
-        /* Adtech badge - FIXED z-index */
         .adtech-badge {
             position: absolute;
             top: 8px;
@@ -194,7 +195,6 @@
             letter-spacing: 0.3px;
         }
 
-        /* Favorite - FIXED z-index */
         .favorite-btn {
             position: absolute;
             top: 8px;
@@ -223,7 +223,6 @@
             flex: 1;
         }
 
-        /* Price */
         .price-block { margin-bottom: 6px; min-height: 40px; }
 
         .price-row {
@@ -280,7 +279,6 @@
         .rating-star { color: #fbbf24; }
         .rating-value { color: #333; font-weight: 600; }
 
-        /* Cart button */
         .cart-btn {
             display: flex;
             align-items: center;
@@ -325,7 +323,6 @@
             grid-column: 1 / -1;
         }
 
-        /* Responsive */
         @media (max-width: 1400px) {
             .products-grid { grid-template-columns: repeat(3, 1fr); }
         }
@@ -335,10 +332,10 @@
         }
 
         @media (max-width: 768px) {
-            .split-container { flex-direction: column; height: auto; }
+            .split-container { flex-direction: column; }
             .panel { border-right: none; border-bottom: 1px solid #e5e5e5; }
-            .products-scroll { max-height: 500px; }
             .products-grid { grid-template-columns: repeat(2, 1fr); }
+            .panel-header { top: 54px; }
         }
     </style>
 </head>
@@ -360,9 +357,9 @@
         <div class="panel">
             <div class="panel-header">
                 <span class="panel-badge">A</span>
-                <span class="panel-title">Current Model</span>
+                <span class="panel-title">Текущая модель</span>
             </div>
-            <div class="products-scroll">
+            <div class="products-area">
                 <div class="products-grid" id="grid-left">
                     <div class="loading">Загрузка...</div>
                 </div>
@@ -372,9 +369,9 @@
         <div class="panel">
             <div class="panel-header">
                 <span class="panel-badge">B</span>
-                <span class="panel-title">New Model</span>
+                <span class="panel-title">Новая модель</span>
             </div>
-            <div class="products-scroll">
+            <div class="products-area">
                 <div class="products-grid" id="grid-right">
                     <div class="loading">Загрузка...</div>
                 </div>
@@ -477,7 +474,6 @@
                 const left = parseCSV(await r1.text());
                 const right = parseCSV(await r2.text());
 
-                // Set common header
                 if (left.length) {
                     document.getElementById('page-title').textContent = left[0].art_category_level_2_name || 'Покупайте за 1₽';
                     document.getElementById('page-count').textContent = left.length + ' товаров';
@@ -493,25 +489,6 @@
         }
 
         init();
-
-        // Sync scroll between panels
-        const leftScroll = document.querySelector('.panel:first-child .products-scroll');
-        const rightScroll = document.querySelector('.panel:last-child .products-scroll');
-        let isSyncing = false;
-
-        leftScroll.addEventListener('scroll', () => {
-            if (isSyncing) return;
-            isSyncing = true;
-            rightScroll.scrollTop = leftScroll.scrollTop;
-            isSyncing = false;
-        });
-
-        rightScroll.addEventListener('scroll', () => {
-            if (isSyncing) return;
-            isSyncing = true;
-            leftScroll.scrollTop = rightScroll.scrollTop;
-            isSyncing = false;
-        });
     </script>
 </body>
 </html>
