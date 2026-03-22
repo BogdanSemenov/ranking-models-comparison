@@ -13,22 +13,38 @@
     </header>
 
     <main class="container">
-        <div class="columns">
-            <div class="column">
-                <div class="column-header current">
-                    <h2>Current Model</h2>
-                    <span class="badge">Baseline</span>
+        <div class="comparison">
+            <div class="model-column">
+                <div class="model-header current">
+                    <div class="model-label">
+                        <span class="model-icon">A</span>
+                        <div class="model-info">
+                            <h2>Current Model</h2>
+                            <span class="model-tag">Baseline</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="category-title" id="current-category"></div>
+                <div class="category-header" id="current-category"></div>
                 <div class="products-grid" id="current-products"></div>
             </div>
 
-            <div class="column">
-                <div class="column-header new">
-                    <h2>New Model</h2>
-                    <span class="badge challenger">Challenger</span>
+            <div class="divider">
+                <div class="divider-line"></div>
+                <span class="divider-text">VS</span>
+                <div class="divider-line"></div>
+            </div>
+
+            <div class="model-column">
+                <div class="model-header new">
+                    <div class="model-label">
+                        <span class="model-icon">B</span>
+                        <div class="model-info">
+                            <h2>New Model</h2>
+                            <span class="model-tag challenger">Challenger</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="category-title" id="new-category"></div>
+                <div class="category-header" id="new-category"></div>
                 <div class="products-grid" id="new-products"></div>
             </div>
         </div>

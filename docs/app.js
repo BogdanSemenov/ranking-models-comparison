@@ -22,6 +22,21 @@ function getPhotoUrl(artCode) {
     return `photo/${artCode}_Фото Товара_Л.${ext}`;
 }
 
+// Format price (целое число без копеек)
+function formatPrice(price) {
+    if (!price) return null;
+    return Math.round(parseFloat(price));
+}
+
+// Calculate discount percentage
+function calcDiscount(price, actionPrice) {
+    if (!price || !actionPrice) return null;
+    const p = parseFloat(price);
+    const ap = parseFloat(actionPrice);
+    if (p <= ap) return null;
+    return Math.round((1 - ap / p) * 100);
+}
+
 // Create product card HTML
 function createProductCard(product) {
     const productUrl = `https://magnit.ru/product/${product.art_code}?shopCode=694420&shopType=express`;
@@ -29,14 +44,37 @@ function createProductCard(product) {
     const isAdtech = product.is_adtech === 'True';
     const hasRating = product.rating_value && product.rating_value !== '';
 
+    // Цены
+    const price = formatPrice(product.price);
+    const actionPrice = formatPrice(product.action_price);
+    const hasDiscount = price && actionPrice && actionPrice < price;
+    const discount = calcDiscount(product.price, product.action_price);
+
+    // Определяем какую цену показывать как основную
+    const displayPrice = actionPrice || price;
+
+    // Price block HTML
+    let priceHtml = '';
+    if (displayPrice) {
+        priceHtml = `
+            <div class="price-block">
+                <div class="price-row">
+                    <span class="current-price">${displayPrice} <span class="currency">₽</span></span>
+                    ${hasDiscount ? `<span class="discount-badge">-${discount}%</span>` : ''}
+                </div>
+                ${hasDiscount ? `<div class="old-price">${price} ₽</div>` : ''}
+            </div>
+        `;
+    }
+
     return `
         <a href="${productUrl}" target="_blank" rel="noopener" class="product-card">
             <div class="product-image-container">
-                <span class="position-badge">${product.position}</span>
                 <img
                     src="${photoUrl}"
                     alt="${product.product_name}"
                     class="product-image"
+                    loading="lazy"
                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
                 >
                 <div class="placeholder-image" style="display:none;">
@@ -49,6 +87,7 @@ function createProductCard(product) {
                 ${isAdtech ? '<span class="adtech-badge">Adtech</span>' : ''}
             </div>
             <div class="product-info">
+                ${priceHtml}
                 <div class="product-name">${product.product_name}</div>
                 ${hasRating ? `
                     <div class="product-rating">
