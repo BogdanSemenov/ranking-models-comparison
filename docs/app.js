@@ -28,6 +28,13 @@ function formatPrice(price) {
     return Math.round(parseFloat(price));
 }
 
+// Format rating (5.0 -> 5, 4.9 -> 4.9)
+function formatRating(rating) {
+    if (!rating) return null;
+    const num = parseFloat(rating);
+    return num % 1 === 0 ? Math.round(num) : num;
+}
+
 // Calculate discount percentage
 function calcDiscount(price, actionPrice) {
     if (!price || !actionPrice) return null;
@@ -45,10 +52,13 @@ function createProductCard(product) {
     const hasRating = product.rating_value && product.rating_value !== '';
 
     // Цены
-    const price = formatPrice(product.price);
+    const price = formatPrice(product.base_price);
     const actionPrice = formatPrice(product.action_price);
     const hasDiscount = price && actionPrice && actionPrice < price;
-    const discount = calcDiscount(product.price, product.action_price);
+    const discount = calcDiscount(product.base_price, product.action_price);
+
+    // Рейтинг
+    const rating = formatRating(product.rating_value);
 
     // Определяем какую цену показывать как основную
     const displayPrice = actionPrice || price;
@@ -92,7 +102,7 @@ function createProductCard(product) {
                 ${hasRating ? `
                     <div class="product-rating">
                         <span class="star-icon">★</span>
-                        <span class="rating-value">${product.rating_value}</span>
+                        <span class="rating-value">${rating}</span>
                     </div>
                 ` : ''}
             </div>
