@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Магнит — Покупайте за 1₽</title>
+    <title>Сравнение моделей в категориальном ранжировании</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -28,43 +28,10 @@
             z-index: 100;
         }
 
-        .logo {
-            background: linear-gradient(135deg, #e31837 0%, #c41230 100%);
-            color: white;
-            padding: 10px 18px;
-            border-radius: 8px;
+        .header-title {
+            font-size: 18px;
             font-weight: 700;
-            font-size: 15px;
-            letter-spacing: 0.5px;
-        }
-
-        .search-box {
-            flex: 1;
-            max-width: 600px;
-            display: flex;
-            background: #f8f8f8;
-            border-radius: 10px;
-            overflow: hidden;
-            border: 1px solid #eee;
-        }
-
-        .search-box input {
-            flex: 1;
-            padding: 12px 18px;
-            border: none;
-            font-size: 14px;
-            background: transparent;
-            outline: none;
-        }
-
-        .search-box button {
-            background: linear-gradient(135deg, #e31837 0%, #c41230 100%);
-            color: white;
-            border: none;
-            padding: 12px 28px;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
+            color: #1a1a1a;
         }
 
         /* Page header */
@@ -85,6 +52,27 @@
         .page-count {
             font-size: 14px;
             color: #999;
+        }
+
+        .category-select {
+            padding: 8px 14px;
+            font-size: 14px;
+            font-family: inherit;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fff;
+            color: #333;
+            cursor: pointer;
+            outline: none;
+            max-width: 300px;
+        }
+
+        .category-select:hover {
+            border-color: #ccc;
+        }
+
+        .category-select:focus {
+            border-color: #e31837;
         }
 
         /* Split layout - NO separate scroll */
@@ -341,16 +329,15 @@
 </head>
 <body>
     <header class="header">
-        <span class="logo">МАГНИТ</span>
-        <div class="search-box">
-            <input type="text" placeholder="Искать товары">
-            <button>Найти</button>
-        </div>
+        <span class="header-title">Сравнение моделей в категориальном ранжировании</span>
     </header>
 
     <div class="page-header">
         <h1 class="page-title" id="page-title">Покупайте за 1₽</h1>
         <span class="page-count" id="page-count"></span>
+        <select class="category-select" id="category-select">
+            <option value="">Загрузка...</option>
+        </select>
     </div>
 
     <div class="split-container">
@@ -383,7 +370,7 @@
         function parseCSV(csv) {
             const lines = csv.trim().split('\n');
             const headers = lines[0].split(',').map(h => h.trim());
-            const products = [], seen = new Set();
+            const products = [];
 
             for (let i = 1; i < lines.length; i++) {
                 const values = [];
@@ -397,9 +384,19 @@
 
                 const obj = {};
                 headers.forEach((h, idx) => obj[h] = values[idx] || '');
-                if (!seen.has(obj.position)) { seen.add(obj.position); products.push(obj); }
+                products.push(obj);
             }
             return products;
+        }
+
+        function filterByCategory(products, category) {
+            const filtered = products.filter(p => p.art_category_level_2_name === category);
+            const seen = new Set();
+            return filtered.filter(p => {
+                if (seen.has(p.position)) return false;
+                seen.add(p.position);
+                return true;
+            });
         }
 
         function card(p) {
@@ -463,6 +460,20 @@
             }
         }
 
+        let allLeft = [];
+        let allRight = [];
+
+        function showCategory(category) {
+            const left = filterByCategory(allLeft, category);
+            const right = filterByCategory(allRight, category);
+
+            document.getElementById('page-title').textContent = category;
+            document.getElementById('page-count').textContent = left.length + ' товаров';
+
+            render(left, 'grid-left');
+            render(right, 'grid-right');
+        }
+
         async function init() {
             try {
                 const [r1, r2] = await Promise.all([
@@ -471,16 +482,30 @@
                 ]);
                 if (!r1.ok || !r2.ok) throw new Error('Load failed');
 
-                const left = parseCSV(await r1.text());
-                const right = parseCSV(await r2.text());
+                allLeft = parseCSV(await r1.text());
+                allRight = parseCSV(await r2.text());
 
-                if (left.length) {
-                    document.getElementById('page-title').textContent = left[0].art_category_level_2_name || 'Покупайте за 1₽';
-                    document.getElementById('page-count').textContent = left.length + ' товаров';
+                // Collect unique categories from both datasets
+                const cats = new Set();
+                allLeft.forEach(p => { if (p.art_category_level_2_name) cats.add(p.art_category_level_2_name); });
+                allRight.forEach(p => { if (p.art_category_level_2_name) cats.add(p.art_category_level_2_name); });
+
+                const select = document.getElementById('category-select');
+                select.innerHTML = '';
+                const sorted = [...cats].sort();
+                sorted.forEach(cat => {
+                    const opt = document.createElement('option');
+                    opt.value = cat;
+                    opt.textContent = cat;
+                    select.appendChild(opt);
+                });
+
+                select.addEventListener('change', () => showCategory(select.value));
+
+                // Show first category
+                if (sorted.length) {
+                    showCategory(sorted[0]);
                 }
-
-                render(left, 'grid-left');
-                render(right, 'grid-right');
             } catch (e) {
                 console.error(e);
                 document.getElementById('grid-left').innerHTML = '<div class="loading">Ошибка</div>';
