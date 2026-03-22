@@ -18,7 +18,7 @@
         /* Header */
         .header {
             background: #fff;
-            padding: 12px 32px;
+            padding: 14px 32px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -26,43 +26,6 @@
             top: 0;
             z-index: 100;
             border-bottom: 1px solid #eee;
-        }
-
-        .header-logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-        }
-
-        .header-logo-icon {
-            width: 36px;
-            height: 36px;
-            flex-shrink: 0;
-        }
-
-        .header-logo-text {
-            display: flex;
-            flex-direction: column;
-            line-height: 1.1;
-        }
-
-        .header-logo-name {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #e31837 0%, #ff6b35 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .header-logo-subtitle {
-            font-size: 10px;
-            font-weight: 500;
-            color: #999;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
         }
 
         .header-title {
@@ -424,27 +387,7 @@
 </head>
 <body>
     <header class="header">
-        <a class="header-logo" href="#">
-            <svg class="header-logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <linearGradient id="logoGrad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
-                        <stop offset="0%" stop-color="#e31837"/>
-                        <stop offset="100%" stop-color="#ff6b35"/>
-                    </linearGradient>
-                </defs>
-                <rect width="40" height="40" rx="10" fill="url(#logoGrad)"/>
-                <!-- Bar chart / ranking bars -->
-                <rect x="8" y="22" width="6" height="12" rx="1.5" fill="white" opacity="0.9"/>
-                <rect x="17" y="14" width="6" height="20" rx="1.5" fill="white"/>
-                <rect x="26" y="8" width="6" height="26" rx="1.5" fill="white" opacity="0.9"/>
-                <!-- Upward arrow accent -->
-                <path d="M33 10L36 7L33 4" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
-            </svg>
-            <div class="header-logo-text">
-                <span class="header-logo-name">Ranking</span>
-                <span class="header-logo-subtitle">model comparison</span>
-            </div>
-        </a>
+        <span class="header-title">Сравнение моделей в категориальном ранжировании</span>
     </header>
 
     <div class="page-header">
