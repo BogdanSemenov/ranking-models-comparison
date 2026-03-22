@@ -493,6 +493,25 @@
         }
 
         init();
+
+        // Sync scroll between panels
+        const leftScroll = document.querySelector('.panel:first-child .products-scroll');
+        const rightScroll = document.querySelector('.panel:last-child .products-scroll');
+        let isSyncing = false;
+
+        leftScroll.addEventListener('scroll', () => {
+            if (isSyncing) return;
+            isSyncing = true;
+            rightScroll.scrollTop = leftScroll.scrollTop;
+            isSyncing = false;
+        });
+
+        rightScroll.addEventListener('scroll', () => {
+            if (isSyncing) return;
+            isSyncing = true;
+            leftScroll.scrollTop = rightScroll.scrollTop;
+            isSyncing = false;
+        });
     </script>
 </body>
 </html>
