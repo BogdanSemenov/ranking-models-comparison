@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сравнение моделей ранжирования | A/B Test</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <h1>Сравнение моделей ранжирования</h1>
+        <p class="subtitle">A/B тест товарных подборок</p>
+    </header>
+
+    <main class="container">
+        <div class="columns">
+            <div class="column">
+                <div class="column-header current">
+                    <h2>Current Model</h2>
+                    <span class="badge">Baseline</span>
+                </div>
+                <div class="category-title" id="current-category"></div>
+                <div class="products-grid" id="current-products"></div>
+            </div>
+
+            <div class="column">
+                <div class="column-header new">
+                    <h2>New Model</h2>
+                    <span class="badge challenger">Challenger</span>
+                </div>
+                <div class="category-title" id="new-category"></div>
+                <div class="products-grid" id="new-products"></div>
+            </div>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
