@@ -3,50 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Сравнение моделей ранжирования | A/B Test</title>
+    <title>Сравнение моделей ранжирования | Магнит</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="header">
-        <h1>Сравнение моделей ранжирования</h1>
-        <p class="subtitle">A/B тест товарных подборок</p>
+    <!-- Header like Magnit -->
+    <header class="magnit-header">
+        <div class="header-top">
+            <div class="header-container">
+                <div class="logo">
+                    <svg width="120" height="32" viewBox="0 0 120 32" fill="none">
+                        <rect width="120" height="32" rx="4" fill="#E31837"/>
+                        <text x="12" y="22" fill="white" font-family="Inter, sans-serif" font-size="14" font-weight="700">МАГНИТ</text>
+                    </svg>
+                </div>
+                <div class="search-bar">
+                    <input type="text" placeholder="Искать товары" disabled>
+                    <button class="search-btn">Найти</button>
+                </div>
+                <div class="header-info">
+                    <span class="delivery-info">A/B Тест ранжирования</span>
+                </div>
+            </div>
+        </div>
     </header>
 
-    <main class="container">
-        <div class="comparison">
-            <div class="model-column">
-                <div class="model-header current">
-                    <div class="model-label">
-                        <span class="model-icon">A</span>
-                        <div class="model-info">
-                            <h2>Current Model</h2>
-                            <span class="model-tag">Baseline</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="category-header" id="current-category"></div>
-                <div class="products-grid" id="current-products"></div>
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+        <div class="container">
+            <a href="#">Главная</a> / <span>Сравнение моделей</span>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="page-title">
+                <h1>Сравнение моделей ранжирования</h1>
+                <p class="products-count"><span id="total-count">0</span> товаров</p>
             </div>
 
-            <div class="divider">
-                <div class="divider-line"></div>
-                <span class="divider-text">VS</span>
-                <div class="divider-line"></div>
+            <!-- Model tabs -->
+            <div class="model-tabs">
+                <button class="model-tab active" data-model="current">
+                    <span class="tab-badge current">A</span>
+                    Current Model
+                    <span class="tab-tag">Baseline</span>
+                </button>
+                <button class="model-tab" data-model="new">
+                    <span class="tab-badge new">B</span>
+                    New Model
+                    <span class="tab-tag challenger">Challenger</span>
+                </button>
             </div>
 
-            <div class="model-column">
-                <div class="model-header new">
-                    <div class="model-label">
-                        <span class="model-icon">B</span>
-                        <div class="model-info">
-                            <h2>New Model</h2>
-                            <span class="model-tag challenger">Challenger</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="category-header" id="new-category"></div>
-                <div class="products-grid" id="new-products"></div>
+            <!-- Category name -->
+            <div class="category-name" id="category-name">Покупайте за 1₽</div>
+
+            <!-- Sort options -->
+            <div class="sort-options">
+                <span class="sort-label">по популярности</span>
+                <span class="sort-option">по цене</span>
+                <span class="sort-option">высокий рейтинг</span>
+                <span class="sort-option">по размеру скидки</span>
             </div>
+
+            <!-- Products grid -->
+            <div class="products-grid" id="products-grid"></div>
         </div>
     </main>
 
