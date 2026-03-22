@@ -62,15 +62,32 @@
             font-weight: 600;
             font-size: 14px;
             cursor: pointer;
-            transition: opacity 0.2s;
         }
 
-        .search-box button:hover { opacity: 0.9; }
+        /* Page header */
+        .page-header {
+            background: #fff;
+            padding: 20px 32px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
 
-        /* Main split layout */
+        .page-title {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .page-count {
+            font-size: 14px;
+            color: #999;
+        }
+
+        /* Split layout */
         .split-container {
             display: flex;
-            height: calc(100vh - 70px);
+            height: calc(100vh - 130px);
         }
 
         .panel {
@@ -85,22 +102,22 @@
 
         /* Panel header */
         .panel-header {
-            padding: 16px 24px;
+            padding: 14px 20px;
             border-bottom: 1px solid #eee;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             background: #fafafa;
         }
 
         .panel-badge {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 700;
             color: white;
         }
@@ -109,60 +126,29 @@
         .panel:last-child .panel-badge { background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); }
 
         .panel-title {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
             color: #333;
         }
 
-        .panel-tag {
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            padding: 4px 10px;
-            border-radius: 6px;
-            letter-spacing: 0.5px;
-        }
-
-        .panel:first-child .panel-tag { background: #fef2f2; color: #dc2626; }
-        .panel:last-child .panel-tag { background: #f0fdf4; color: #16a34a; }
-
-        /* Category info */
-        .category-info {
-            padding: 16px 24px;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .category-name {
-            font-size: 18px;
-            font-weight: 700;
-        }
-
-        .product-count {
-            font-size: 13px;
-            color: #999;
-        }
-
-        /* Products scroll area */
+        /* Products scroll */
         .products-scroll {
             flex: 1;
             overflow-y: auto;
-            padding: 20px;
+            padding: 16px;
             background: #f8f8f8;
         }
 
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
         }
 
         /* Product card */
         .product-card {
             background: #fff;
-            border-radius: 16px;
+            border-radius: 12px;
             overflow: hidden;
             text-decoration: none;
             color: inherit;
@@ -174,7 +160,7 @@
         }
 
         .product-card:hover {
-            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
             transform: translateY(-2px);
         }
 
@@ -189,39 +175,40 @@
             top: 0; left: 0;
             width: 100%; height: 100%;
             object-fit: contain;
-            padding: 16px;
+            padding: 12px;
         }
 
-        /* Adtech badge */
+        /* Adtech badge - FIXED z-index */
         .adtech-badge {
             position: absolute;
-            top: 10px;
-            left: 10px;
+            top: 8px;
+            left: 8px;
+            z-index: 10;
             background: rgba(0,0,0,0.6);
             color: white;
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 9px;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 8px;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            backdrop-filter: blur(4px);
+            letter-spacing: 0.3px;
         }
 
-        /* Favorite */
+        /* Favorite - FIXED z-index */
         .favorite-btn {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 36px;
-            height: 36px;
+            top: 8px;
+            right: 8px;
+            z-index: 10;
+            width: 32px;
+            height: 32px;
             background: #fff;
             border: none;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             cursor: pointer;
             color: #ccc;
             transition: all 0.2s;
@@ -230,23 +217,23 @@
         .favorite-btn:hover { color: #e31837; transform: scale(1.1); }
 
         .product-info {
-            padding: 16px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
             flex: 1;
         }
 
         /* Price */
-        .price-block { margin-bottom: 10px; min-height: 48px; }
+        .price-block { margin-bottom: 6px; min-height: 40px; }
 
         .price-row {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .price-main {
-            font-size: 22px;
+            font-size: 18px;
             font-weight: 700;
             color: #1a1a1a;
         }
@@ -256,40 +243,41 @@
         .price-discount {
             background: linear-gradient(135deg, #e31837 0%, #c41230 100%);
             color: white;
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10px;
             font-weight: 700;
         }
 
         .price-old {
-            font-size: 14px;
+            font-size: 12px;
             color: #999;
             text-decoration: line-through;
             margin-top: 2px;
         }
 
         .product-name {
-            font-size: 13px;
-            line-height: 1.4;
+            font-size: 12px;
+            line-height: 1.3;
             color: #333;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
-            height: 36px;
-            margin-bottom: 10px;
+            height: 32px;
+            margin-bottom: 6px;
         }
 
         .rating {
             display: flex;
             align-items: center;
-            gap: 4px;
-            margin-bottom: 14px;
-            font-size: 13px;
+            gap: 3px;
+            margin-bottom: 10px;
+            font-size: 12px;
+            min-height: 16px;
         }
 
-        .rating-star { color: #fbbf24; font-size: 14px; }
+        .rating-star { color: #fbbf24; }
         .rating-value { color: #333; font-weight: 600; }
 
         /* Cart button */
@@ -297,12 +285,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            padding: 12px 16px;
+            gap: 6px;
+            padding: 10px 12px;
             background: #fff;
-            border: 2px solid #e5e5e5;
-            border-radius: 12px;
-            font-size: 13px;
+            border: 1.5px solid #e5e5e5;
+            border-radius: 10px;
+            font-size: 12px;
             font-weight: 600;
             color: #333;
             cursor: pointer;
@@ -316,7 +304,7 @@
             background: #fef2f2;
         }
 
-        .cart-btn svg { width: 18px; height: 18px; }
+        .cart-btn svg { width: 16px; height: 16px; }
 
         .placeholder {
             position: absolute;
@@ -331,20 +319,26 @@
 
         .loading {
             text-align: center;
-            padding: 60px;
+            padding: 40px;
             color: #999;
             font-size: 14px;
+            grid-column: 1 / -1;
         }
 
         /* Responsive */
-        @media (max-width: 1200px) {
-            .products-grid { grid-template-columns: 1fr; }
+        @media (max-width: 1400px) {
+            .products-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 1100px) {
+            .products-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
         @media (max-width: 768px) {
             .split-container { flex-direction: column; height: auto; }
             .panel { border-right: none; border-bottom: 1px solid #e5e5e5; }
-            .products-scroll { max-height: 600px; }
+            .products-scroll { max-height: 500px; }
+            .products-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
@@ -357,17 +351,16 @@
         </div>
     </header>
 
+    <div class="page-header">
+        <h1 class="page-title" id="page-title">Покупайте за 1₽</h1>
+        <span class="page-count" id="page-count"></span>
+    </div>
+
     <div class="split-container">
-        <!-- Left Panel: Current Model -->
         <div class="panel">
             <div class="panel-header">
                 <span class="panel-badge">A</span>
                 <span class="panel-title">Current Model</span>
-                <span class="panel-tag">Baseline</span>
-            </div>
-            <div class="category-info">
-                <span class="category-name" id="cat-left">Загрузка...</span>
-                <span class="product-count" id="count-left"></span>
             </div>
             <div class="products-scroll">
                 <div class="products-grid" id="grid-left">
@@ -376,16 +369,10 @@
             </div>
         </div>
 
-        <!-- Right Panel: New Model -->
         <div class="panel">
             <div class="panel-header">
                 <span class="panel-badge">B</span>
                 <span class="panel-title">New Model</span>
-                <span class="panel-tag">Challenger</span>
-            </div>
-            <div class="category-info">
-                <span class="category-name" id="cat-right">Загрузка...</span>
-                <span class="product-count" id="count-right"></span>
             </div>
             <div class="products-scroll">
                 <div class="products-grid" id="grid-right">
@@ -435,13 +422,13 @@
                     <div class="product-image-wrap">
                         ${isAd ? '<span class="adtech-badge">ad</span>' : ''}
                         <button class="favorite-btn" onclick="event.preventDefault();event.stopPropagation();">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
                                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
                             </svg>
                         </button>
                         ${img ? `<img src="${img}" class="product-image" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">` : ''}
                         <div class="placeholder" style="${img ? 'display:none' : ''}">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
                                 <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>
                             </svg>
                         </div>
@@ -470,13 +457,9 @@
             `;
         }
 
-        function render(products, gridId, catId, countId) {
+        function render(products, gridId) {
             const grid = document.getElementById(gridId);
-            const cat = document.getElementById(catId);
-            const cnt = document.getElementById(countId);
             if (products.length) {
-                cat.textContent = products[0].art_category_level_2_name || 'Покупайте за 1₽';
-                cnt.textContent = products.length + ' товаров';
                 grid.innerHTML = products.map(card).join('');
             } else {
                 grid.innerHTML = '<div class="loading">Нет товаров</div>';
@@ -494,8 +477,14 @@
                 const left = parseCSV(await r1.text());
                 const right = parseCSV(await r2.text());
 
-                render(left, 'grid-left', 'cat-left', 'count-left');
-                render(right, 'grid-right', 'cat-right', 'count-right');
+                // Set common header
+                if (left.length) {
+                    document.getElementById('page-title').textContent = left[0].art_category_level_2_name || 'Покупайте за 1₽';
+                    document.getElementById('page-count').textContent = left.length + ' товаров';
+                }
+
+                render(left, 'grid-left');
+                render(right, 'grid-right');
             } catch (e) {
                 console.error(e);
                 document.getElementById('grid-left').innerHTML = '<div class="loading">Ошибка</div>';
