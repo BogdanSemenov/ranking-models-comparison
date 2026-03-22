@@ -152,8 +152,8 @@
         }
 
         .product-card.is-adtech {
-            background: rgba(227, 24, 55, 0.04);
-            border-color: rgba(227, 24, 55, 0.12);
+            background: rgba(227, 24, 55, 0.08);
+            border-color: rgba(227, 24, 55, 0.18);
         }
 
         .product-card:hover {
@@ -336,10 +336,26 @@
         @media (max-width: 768px) {
             .header { padding: 10px 12px; position: relative; }
             .header-title { font-size: 16px; }
-            .page-header { padding: 8px 12px; flex-wrap: wrap; gap: 8px; position: sticky; top: 0; z-index: 100; background: #fafafa; }
+            .page-header {
+                padding: 8px 12px;
+                display: grid;
+                grid-template-columns: auto 1fr;
+                gap: 6px 8px;
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                background: #fafafa;
+            }
             .page-title { font-size: 14px; }
-            .category-select { font-size: 13px; flex: 1; min-width: 0; }
-            .filter-select { font-size: 13px; }
+            .page-count { justify-self: end; }
+            .category-select {
+                grid-column: 1 / -1;
+                font-size: 14px;
+                width: 100%;
+                max-width: none;
+                padding: 10px 14px;
+            }
+            .filter-select { font-size: 13px; padding: 8px 10px; }
             .split-container { flex-direction: row; }
             .panel { border-right: 1px solid #e5e5e5; min-width: 0; }
             .panel:last-child { border-right: none; }
@@ -347,7 +363,7 @@
             .products-area { padding: 8px; }
             .panel-header {
                 position: sticky;
-                top: 41px;
+                top: 96px;
                 padding: 8px 8px;
                 gap: 6px;
             }
