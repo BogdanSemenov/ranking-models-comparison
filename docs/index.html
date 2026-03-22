@@ -321,10 +321,37 @@
         }
 
         @media (max-width: 768px) {
-            .split-container { flex-direction: column; }
-            .panel { border-right: none; border-bottom: 1px solid #e5e5e5; }
-            .products-grid { grid-template-columns: repeat(2, 1fr); }
-            .panel-header { top: 54px; }
+            .header { padding: 10px 12px; position: relative; }
+            .header-title { font-size: 16px; }
+            .page-header { padding: 8px 12px; flex-wrap: wrap; gap: 8px; position: sticky; top: 0; z-index: 100; background: #fafafa; }
+            .page-title { font-size: 14px; }
+            .category-select { font-size: 13px; flex: 1; min-width: 0; }
+            .split-container { flex-direction: row; }
+            .panel { border-right: 1px solid #e5e5e5; min-width: 0; }
+            .panel:last-child { border-right: none; }
+            .products-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+            .products-area { padding: 8px; }
+            .panel-header {
+                position: sticky;
+                top: 41px;
+                padding: 8px 8px;
+                gap: 6px;
+            }
+            .panel-badge { width: 22px; height: 22px; font-size: 11px; }
+            .panel-title { font-size: 12px; }
+            .product-info { padding: 6px; }
+            .price-main { font-size: 14px; }
+            .price-block { min-height: 32px; margin-bottom: 4px; }
+            .price-old { font-size: 10px; }
+            .price-discount { font-size: 8px; padding: 1px 4px; }
+            .product-name { font-size: 10px; height: 26px; margin-bottom: 4px; }
+            .rating { font-size: 10px; margin-bottom: 6px; }
+            .cart-btn { font-size: 10px; padding: 6px 4px; gap: 3px; border-radius: 6px; }
+            .cart-btn svg { width: 12px; height: 12px; }
+            .product-image { padding: 6px; }
+            .favorite-btn { width: 24px; height: 24px; }
+            .favorite-btn svg { width: 12px; height: 12px; }
+            .adtech-badge { font-size: 6px; padding: 2px 4px; }
         }
     </style>
 </head>
