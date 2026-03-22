@@ -76,21 +76,6 @@
             border-color: #e31837;
         }
 
-        .adtech-select {
-            padding: 8px 14px;
-            font-size: 14px;
-            font-family: inherit;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background: #fff;
-            color: #333;
-            cursor: pointer;
-            outline: none;
-        }
-
-        .adtech-select:hover { border-color: #ccc; }
-        .adtech-select:focus { border-color: #e31837; }
-
         /* Split layout - NO separate scroll */
         .split-container {
             display: flex;
@@ -150,6 +135,7 @@
             grid-template-columns: repeat(4, 1fr);
             gap: 12px;
         }
+
 
         /* Product card */
         .product-card {
@@ -332,13 +318,20 @@
             grid-column: 1 / -1;
         }
 
-        @media (max-width: 1400px) {
-            .products-grid { grid-template-columns: repeat(3, 1fr); }
+        .filter-select {
+            padding: 8px 14px;
+            font-size: 14px;
+            font-family: inherit;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fff;
+            color: #333;
+            cursor: pointer;
+            outline: none;
         }
 
-        @media (max-width: 1100px) {
-            .products-grid { grid-template-columns: repeat(2, 1fr); }
-        }
+        .filter-select:hover { border-color: #ccc; }
+        .filter-select:focus { border-color: #e31837; }
 
         @media (max-width: 768px) {
             .header { padding: 10px 12px; position: relative; }
@@ -346,11 +339,11 @@
             .page-header { padding: 8px 12px; flex-wrap: wrap; gap: 8px; position: sticky; top: 0; z-index: 100; background: #fafafa; }
             .page-title { font-size: 14px; }
             .category-select { font-size: 13px; flex: 1; min-width: 0; }
-            .adtech-select { font-size: 13px; }
+            .filter-select { font-size: 13px; }
             .split-container { flex-direction: row; }
             .panel { border-right: 1px solid #e5e5e5; min-width: 0; }
             .panel:last-child { border-right: none; }
-            .products-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+            .products-grid { gap: 6px; }
             .products-area { padding: 8px; }
             .panel-header {
                 position: sticky;
@@ -387,9 +380,14 @@
         <select class="category-select" id="category-select">
             <option value="">Загрузка...</option>
         </select>
-        <select class="adtech-select" id="adtech-select">
+        <select class="filter-select" id="adtech-select">
             <option value="yes">Adtech закрепы: да</option>
             <option value="no">Adtech закрепы: нет</option>
+        </select>
+        <select class="filter-select" id="columns-select">
+            <option value="2">В ряд: 2</option>
+            <option value="3">В ряд: 3</option>
+            <option value="4">В ряд: 4</option>
         </select>
     </div>
 
@@ -504,6 +502,13 @@
             `;
         }
 
+        function applyColumns() {
+            const cols = document.getElementById('columns-select').value;
+            document.querySelectorAll('.products-grid').forEach(g => {
+                g.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+            });
+        }
+
         function render(products, gridId) {
             const grid = document.getElementById(gridId);
             if (products.length) {
@@ -511,6 +516,7 @@
             } else {
                 grid.innerHTML = '<div class="loading">Нет товаров</div>';
             }
+            applyColumns();
         }
 
         let allLeft = [];
@@ -562,6 +568,10 @@
                 select.addEventListener('change', () => showCategory(select.value));
 
                 document.getElementById('adtech-select').addEventListener('change', () => showCategory(select.value));
+
+                const colSelect = document.getElementById('columns-select');
+                colSelect.value = window.innerWidth <= 768 ? '2' : '4';
+                colSelect.addEventListener('change', applyColumns);
 
                 // Show first category
                 if (sorted.length) {
