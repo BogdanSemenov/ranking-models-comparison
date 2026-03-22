@@ -76,6 +76,21 @@
             border-color: #e31837;
         }
 
+        .adtech-select {
+            padding: 8px 14px;
+            font-size: 14px;
+            font-family: inherit;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fff;
+            color: #333;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .adtech-select:hover { border-color: #ccc; }
+        .adtech-select:focus { border-color: #e31837; }
+
         /* Split layout - NO separate scroll */
         .split-container {
             display: flex;
@@ -148,6 +163,11 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.04);
             transition: all 0.2s;
             border: 1px solid #f0f0f0;
+        }
+
+        .product-card.is-adtech {
+            background: rgba(227, 24, 55, 0.04);
+            border-color: rgba(227, 24, 55, 0.12);
         }
 
         .product-card:hover {
@@ -326,6 +346,7 @@
             .page-header { padding: 8px 12px; flex-wrap: wrap; gap: 8px; position: sticky; top: 0; z-index: 100; background: #fafafa; }
             .page-title { font-size: 14px; }
             .category-select { font-size: 13px; flex: 1; min-width: 0; }
+            .adtech-select { font-size: 13px; }
             .split-container { flex-direction: row; }
             .panel { border-right: 1px solid #e5e5e5; min-width: 0; }
             .panel:last-child { border-right: none; }
@@ -365,6 +386,10 @@
         <span class="page-count" id="page-count"></span>
         <select class="category-select" id="category-select">
             <option value="">Загрузка...</option>
+        </select>
+        <select class="adtech-select" id="adtech-select">
+            <option value="yes">Adtech закрепы: да</option>
+            <option value="no">Adtech закрепы: нет</option>
         </select>
     </div>
 
@@ -440,7 +465,7 @@
             const rat = hasRat ? (parseFloat(p.rating_value) % 1 === 0 ? parseInt(p.rating_value) : parseFloat(p.rating_value).toFixed(1)) : null;
 
             return `
-                <a href="${url}" target="_blank" class="product-card">
+                <a href="${url}" target="_blank" class="product-card${isAd ? ' is-adtech' : ''}">
                     <div class="product-image-wrap">
                         ${isAd ? '<span class="adtech-badge">ad</span>' : ''}
                         <button class="favorite-btn" onclick="event.preventDefault();event.stopPropagation();">
@@ -492,8 +517,14 @@
         let allRight = [];
 
         function showCategory(category) {
-            const left = filterByCategory(allLeft, category);
-            const right = filterByCategory(allRight, category);
+            const showAdtech = document.getElementById('adtech-select').value === 'yes';
+            let left = filterByCategory(allLeft, category);
+            let right = filterByCategory(allRight, category);
+
+            if (!showAdtech) {
+                left = left.filter(p => p.is_adtech !== 'True');
+                right = right.filter(p => p.is_adtech !== 'True');
+            }
 
             document.getElementById('page-title').textContent = category;
             document.getElementById('page-count').textContent = left.length + ' товаров';
@@ -529,6 +560,8 @@
                 });
 
                 select.addEventListener('change', () => showCategory(select.value));
+
+                document.getElementById('adtech-select').addEventListener('change', () => showCategory(select.value));
 
                 // Show first category
                 if (sorted.length) {
