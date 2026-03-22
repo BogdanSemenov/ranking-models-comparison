@@ -3,41 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Сравнение моделей ранжирования</title>
+    <title>Магнит — Покупайте за 1₽</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: #f5f5f5;
             color: #1a1a1a;
-            line-height: 1.4;
         }
 
         /* Header */
         .header {
             background: #fff;
             border-bottom: 1px solid #e5e5e5;
-            padding: 16px 24px;
+        }
+
+        .header-top {
             display: flex;
             align-items: center;
-            gap: 24px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            gap: 16px;
+            padding: 12px 24px;
+            max-width: 1800px;
+            margin: 0 auto;
         }
 
         .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-img {
             background: #e31837;
             color: white;
-            padding: 8px 16px;
+            padding: 8px 12px;
             border-radius: 6px;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 13px;
+        }
+
+        .catalog-btn {
+            background: #ffe5c4;
+            color: #1a1a1a;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .search-box {
@@ -54,7 +71,7 @@
             padding: 10px 16px;
             border: none;
             font-size: 14px;
-            background: #fafafa;
+            outline: none;
         }
 
         .search-box button {
@@ -63,166 +80,168 @@
             border: none;
             padding: 10px 20px;
             font-weight: 600;
+            font-size: 13px;
             cursor: pointer;
         }
 
-        .header-badge {
-            background: #e8f4fd;
-            color: #1a73e8;
-            padding: 6px 12px;
-            border-radius: 6px;
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
             font-size: 13px;
-            font-weight: 500;
+            color: #666;
         }
 
-        /* Main */
-        .main {
-            max-width: 1400px;
+        .delivery-info {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Nav */
+        .nav {
+            background: #fff;
+            border-bottom: 1px solid #e5e5e5;
+            padding: 0 24px;
+        }
+
+        .nav-list {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+            max-width: 1800px;
             margin: 0 auto;
-            padding: 24px;
         }
 
-        .page-header {
-            margin-bottom: 24px;
+        .nav-list a {
+            display: block;
+            padding: 12px 0;
+            color: #666;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .nav-list a:hover { color: #e31837; }
+
+        /* Breadcrumbs */
+        .breadcrumbs {
+            padding: 12px 24px;
+            font-size: 13px;
+            color: #999;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        .breadcrumbs a { color: #666; text-decoration: none; }
+        .breadcrumbs a:hover { color: #e31837; }
+
+        /* Main layout */
+        .main {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 0 24px 40px;
         }
 
         .page-title {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 16px;
         }
 
-        .page-subtitle {
-            color: #666;
-            font-size: 14px;
-        }
-
-        /* Model Tabs */
-        .model-tabs {
+        /* Comparison container */
+        .comparison {
             display: flex;
-            gap: 12px;
-            margin-bottom: 24px;
+            gap: 24px;
         }
 
-        .model-tab {
+        .model-section {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .model-header {
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 14px 24px;
+            padding: 12px 16px;
             background: #fff;
-            border: 2px solid #e5e5e5;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
+            border-radius: 12px 12px 0 0;
+            border-bottom: 3px solid #e31837;
         }
 
-        .model-tab:hover {
-            border-color: #ccc;
+        .model-section:last-child .model-header {
+            border-bottom-color: #22c55e;
         }
 
-        .model-tab.active {
-            border-color: #e31837;
-            background: #fff5f5;
-        }
-
-        .model-tab.active[data-model="new"] {
-            border-color: #22c55e;
-            background: #f0fdf4;
-        }
-
-        .tab-letter {
+        .model-badge {
             width: 28px;
             height: 28px;
             border-radius: 50%;
+            background: #e31837;
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 13px;
             font-weight: 700;
-            color: white;
-            background: #e31837;
         }
 
-        .model-tab[data-model="new"] .tab-letter {
+        .model-section:last-child .model-badge {
             background: #22c55e;
         }
 
-        .tab-label {
-            background: #fee2e2;
-            color: #dc2626;
-            padding: 3px 8px;
-            border-radius: 4px;
+        .model-title {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .model-tag {
             font-size: 10px;
             font-weight: 600;
             text-transform: uppercase;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: #fee2e2;
+            color: #dc2626;
         }
 
-        .model-tab[data-model="new"] .tab-label {
+        .model-section:last-child .model-tag {
             background: #dcfce7;
             color: #16a34a;
         }
 
-        /* Category */
-        .category-header {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
+        /* Products grid */
+        .products-container {
+            background: #fff;
+            border-radius: 0 0 12px 12px;
+            padding: 16px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 12px;
         }
 
-        .product-count {
-            font-size: 14px;
-            color: #999;
-            font-weight: 400;
-        }
-
-        /* Products Grid */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-        }
-
-        @media (max-width: 1200px) {
-            .products-grid { grid-template-columns: repeat(3, 1fr); }
-        }
-
-        @media (max-width: 900px) {
-            .products-grid { grid-template-columns: repeat(2, 1fr); }
-            .model-tabs { flex-direction: column; }
-        }
-
-        @media (max-width: 500px) {
-            .main { padding: 16px; }
-            .products-grid { gap: 12px; }
-        }
-
-        /* Product Card */
+        /* Product card */
         .product-card {
             background: #fff;
             border-radius: 12px;
+            border: 1px solid #f0f0f0;
             overflow: hidden;
             text-decoration: none;
             color: inherit;
             display: flex;
             flex-direction: column;
-            height: 100%;
-            border: 1px solid #f0f0f0;
             transition: box-shadow 0.2s;
         }
 
         .product-card:hover {
-            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
         }
 
-        /* Image Container - Fixed aspect ratio */
-        .product-image-container {
+        .product-image-wrap {
             position: relative;
-            width: 100%;
             padding-top: 100%;
             background: #fff;
         }
@@ -234,225 +253,228 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
-            padding: 16px;
+            padding: 12px;
         }
 
-        /* Adtech badge - small, semi-transparent */
         .adtech-badge {
             position: absolute;
             top: 8px;
             left: 8px;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0,0,0,0.45);
             color: white;
-            padding: 3px 6px;
-            border-radius: 4px;
-            font-size: 9px;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-size: 8px;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
-        /* Favorite */
         .favorite-btn {
             position: absolute;
             top: 8px;
             right: 8px;
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             background: #fff;
             border: none;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
             cursor: pointer;
             color: #ccc;
-            transition: color 0.2s;
         }
 
-        .favorite-btn:hover {
-            color: #e31837;
-        }
+        .favorite-btn:hover { color: #e31837; }
 
-        /* Product Info - Fixed height sections */
         .product-info {
-            padding: 12px;
+            padding: 10px;
             display: flex;
             flex-direction: column;
             flex: 1;
         }
 
-        /* Price */
-        .price-section {
-            margin-bottom: 8px;
-            min-height: 44px;
-        }
+        .price-block { min-height: 40px; margin-bottom: 6px; }
 
         .price-row {
             display: flex;
             align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
+            gap: 6px;
         }
 
-        .price-current {
-            font-size: 20px;
-            font-weight: 700;
-            color: #1a1a1a;
-        }
-
-        .price-current.has-sale {
-            color: #e31837;
-        }
-
-        .price-currency {
+        .price-main {
             font-size: 16px;
+            font-weight: 700;
         }
+
+        .price-main.sale { color: #e31837; }
 
         .price-discount {
             background: #e31837;
             color: white;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 11px;
+            padding: 1px 4px;
+            border-radius: 3px;
+            font-size: 10px;
             font-weight: 600;
         }
 
         .price-old {
-            font-size: 13px;
+            font-size: 12px;
             color: #999;
             text-decoration: line-through;
         }
 
-        /* Name - Fixed height with ellipsis */
         .product-name {
-            font-size: 13px;
-            line-height: 1.4;
+            font-size: 12px;
+            line-height: 1.3;
             color: #333;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
-            height: 36px;
-            margin-bottom: 8px;
+            height: 32px;
+            margin-bottom: 6px;
         }
 
-        /* Rating */
         .rating {
             display: flex;
             align-items: center;
-            gap: 4px;
-            height: 20px;
-            margin-bottom: 12px;
+            gap: 3px;
+            height: 16px;
+            margin-bottom: 8px;
+            font-size: 11px;
         }
 
-        .rating-star {
-            color: #fbbf24;
-            font-size: 14px;
-        }
+        .rating-star { color: #fbbf24; }
+        .rating-value { color: #333; font-weight: 500; }
 
-        .rating-value {
-            font-size: 13px;
-            font-weight: 500;
-            color: #333;
-        }
-
-        /* Cart button */
         .cart-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            width: 100%;
-            padding: 10px;
+            gap: 6px;
+            padding: 8px;
             background: #fff;
             border: 1px solid #e5e5e5;
-            border-radius: 8px;
-            font-size: 13px;
+            border-radius: 6px;
+            font-size: 11px;
             font-weight: 500;
-            color: #333;
             cursor: pointer;
-            transition: all 0.2s;
             margin-top: auto;
         }
 
-        .cart-btn:hover {
-            border-color: #e31837;
-            color: #e31837;
-        }
+        .cart-btn:hover { border-color: #e31837; color: #e31837; }
+        .cart-btn svg { width: 14px; height: 14px; }
 
-        .cart-btn svg {
-            width: 18px;
-            height: 18px;
-        }
-
-        /* Placeholder */
         .placeholder {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #f9f9f9;
+            background: #fafafa;
             color: #ddd;
         }
 
-        /* Loading */
-        .loading {
-            text-align: center;
-            padding: 60px 20px;
-            color: #999;
+        .loading { text-align: center; padding: 40px; color: #999; font-size: 14px; }
+
+        /* Responsive */
+        @media (max-width: 1400px) {
+            .comparison { flex-direction: column; }
+        }
+
+        @media (max-width: 900px) {
+            .products-grid { grid-template-columns: repeat(2, 1fr); }
+            .header-top { flex-wrap: wrap; }
+            .nav-list { overflow-x: auto; }
+        }
+
+        @media (max-width: 600px) {
+            .main { padding: 0 12px 24px; }
+            .products-grid { gap: 8px; }
+            .comparison { gap: 16px; }
         }
     </style>
 </head>
 <body>
     <header class="header">
-        <div class="logo">МАГНИТ</div>
-        <div class="search-box">
-            <input type="text" placeholder="Искать товары" disabled>
-            <button>Найти</button>
+        <div class="header-top">
+            <div class="logo">
+                <span class="logo-img">МАГНИТ</span>
+                <button class="catalog-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+                    </svg>
+                    Каталог
+                </button>
+            </div>
+            <div class="search-box">
+                <input type="text" placeholder="Искать товары">
+                <button>Найти</button>
+            </div>
+            <div class="header-right">
+                <span class="delivery-info">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                    </svg>
+                    Доставка • Магнит
+                </span>
+            </div>
         </div>
-        <div class="header-badge">A/B Тест ранжирования</div>
     </header>
 
+    <nav class="nav">
+        <ul class="nav-list">
+            <li><a href="#">Карта Магнит Плюс</a></li>
+            <li><a href="#">Акции</a></li>
+            <li><a href="#">Магазины</a></li>
+            <li><a href="#">Бонусы от партнёров</a></li>
+            <li><a href="#">Помощь</a></li>
+            <li><a href="#">Вакансии</a></li>
+            <li><a href="#">Партнёрам</a></li>
+            <li><a href="#">О компании</a></li>
+        </ul>
+    </nav>
+
+    <div class="breadcrumbs">
+        <a href="#">Главная</a> / <a href="#">Все категории</a> / <span id="breadcrumb-category">Покупайте за 1₽</span>
+    </div>
+
     <main class="main">
-        <div class="page-header">
-            <h1 class="page-title">Сравнение моделей ранжирования</h1>
-            <p class="page-subtitle">Визуализация результатов A/B теста товарных подборок</p>
-        </div>
+        <h1 class="page-title" id="page-title">Покупайте за 1₽</h1>
 
-        <div class="model-tabs">
-            <button class="model-tab active" data-model="current">
-                <span class="tab-letter">A</span>
-                Current Model
-                <span class="tab-label">Baseline</span>
-            </button>
-            <button class="model-tab" data-model="new">
-                <span class="tab-letter">B</span>
-                New Model
-                <span class="tab-label">Challenger</span>
-            </button>
-        </div>
+        <div class="comparison">
+            <div class="model-section">
+                <div class="model-header">
+                    <span class="model-badge">A</span>
+                    <span class="model-title">Current Model</span>
+                    <span class="model-tag">Baseline</span>
+                </div>
+                <div class="products-container">
+                    <div class="products-grid" id="grid-current">
+                        <div class="loading">Загрузка...</div>
+                    </div>
+                </div>
+            </div>
 
-        <div class="category-header">
-            <span id="category-name">Загрузка...</span>
-            <span class="product-count" id="product-count"></span>
-        </div>
-
-        <div class="products-grid" id="products-grid">
-            <div class="loading">Загрузка товаров...</div>
+            <div class="model-section">
+                <div class="model-header">
+                    <span class="model-badge">B</span>
+                    <span class="model-title">New Model</span>
+                    <span class="model-tag">Challenger</span>
+                </div>
+                <div class="products-container">
+                    <div class="products-grid" id="grid-new">
+                        <div class="loading">Загрузка...</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
     <script>
-        let currentProducts = [];
-        let newProducts = [];
-        let activeModel = 'current';
-
         function parseCSV(csv) {
             const lines = csv.trim().split('\n');
             const headers = lines[0].split(',').map(h => h.trim());
@@ -461,20 +483,13 @@
 
             for (let i = 1; i < lines.length; i++) {
                 const values = [];
-                let current = '';
-                let inQuotes = false;
-
-                for (const char of lines[i]) {
-                    if (char === '"') {
-                        inQuotes = !inQuotes;
-                    } else if (char === ',' && !inQuotes) {
-                        values.push(current.trim());
-                        current = '';
-                    } else {
-                        current += char;
-                    }
+                let cur = '', inQ = false;
+                for (const c of lines[i]) {
+                    if (c === '"') inQ = !inQ;
+                    else if (c === ',' && !inQ) { values.push(cur.trim()); cur = ''; }
+                    else cur += c;
                 }
-                values.push(current.trim());
+                values.push(cur.trim());
 
                 const obj = {};
                 headers.forEach((h, idx) => obj[h] = values[idx] || '');
@@ -490,48 +505,44 @@
         function createCard(p) {
             const url = p.link || '#';
             const img = p.image || '';
-            const isAdtech = p.is_adtech === 'True';
-            const hasRating = p.rating_value && p.rating_value.trim() !== '';
+            const isAd = p.is_adtech === 'True';
+            const hasRating = p.rating_value && p.rating_value.trim();
 
-            const basePrice = p.base_price ? Math.round(parseFloat(p.base_price)) : null;
-            const salePrice = p.action_price ? Math.round(parseFloat(p.action_price)) : null;
-            const hasSale = basePrice && salePrice && salePrice < basePrice;
-            const discount = hasSale ? Math.round((1 - salePrice / basePrice) * 100) : 0;
-            const displayPrice = salePrice || basePrice;
-            const rating = hasRating ? (parseFloat(p.rating_value) % 1 === 0 ? parseInt(p.rating_value) : parseFloat(p.rating_value)) : null;
+            const base = p.base_price ? Math.round(parseFloat(p.base_price)) : null;
+            const sale = p.action_price ? Math.round(parseFloat(p.action_price)) : null;
+            const hasSale = base && sale && sale < base;
+            const disc = hasSale ? Math.round((1 - sale / base) * 100) : 0;
+            const price = sale || base;
+            const rat = hasRating ? (parseFloat(p.rating_value) % 1 === 0 ? parseInt(p.rating_value) : parseFloat(p.rating_value).toFixed(1)) : null;
 
             return `
                 <a href="${url}" target="_blank" class="product-card">
-                    <div class="product-image-container">
-                        ${isAdtech ? '<span class="adtech-badge">adtech</span>' : ''}
+                    <div class="product-image-wrap">
+                        ${isAd ? '<span class="adtech-badge">ad</span>' : ''}
                         <button class="favorite-btn" onclick="event.preventDefault();event.stopPropagation();">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
                             </svg>
                         </button>
                         ${img ? `<img src="${img}" alt="" class="product-image" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">` : ''}
                         <div class="placeholder" style="${img ? 'display:none' : ''}">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-                                <rect x="3" y="3" width="18" height="18" rx="2"/>
-                                <circle cx="8.5" cy="8.5" r="1.5"/>
-                                <path d="M21 15l-5-5L5 21"/>
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                                <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>
                             </svg>
                         </div>
                     </div>
                     <div class="product-info">
-                        <div class="price-section">
-                            ${displayPrice ? `
+                        <div class="price-block">
+                            ${price ? `
                                 <div class="price-row">
-                                    <span class="price-current${hasSale ? ' has-sale' : ''}">${displayPrice}<span class="price-currency">₽</span></span>
-                                    ${hasSale ? `<span class="price-discount">-${discount}%</span>` : ''}
+                                    <span class="price-main${hasSale ? ' sale' : ''}">${price}₽</span>
+                                    ${hasSale ? `<span class="price-discount">-${disc}%</span>` : ''}
                                 </div>
-                                ${hasSale ? `<div class="price-old">${basePrice} ₽</div>` : ''}
+                                ${hasSale ? `<div class="price-old">${base} ₽</div>` : ''}
                             ` : ''}
                         </div>
                         <div class="product-name">${p.product_name || ''}</div>
-                        <div class="rating">
-                            ${rating !== null ? `<span class="rating-star">★</span><span class="rating-value">${rating}</span>` : ''}
-                        </div>
+                        <div class="rating">${rat !== null ? `<span class="rating-star">★</span><span class="rating-value">${rat}</span>` : ''}</div>
                         <button class="cart-btn" onclick="event.preventDefault();event.stopPropagation();">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
@@ -544,48 +555,39 @@
             `;
         }
 
-        function render(products) {
-            const grid = document.getElementById('products-grid');
-            const category = document.getElementById('category-name');
-            const count = document.getElementById('product-count');
-
+        function render(products, gridId) {
+            const grid = document.getElementById(gridId);
             if (products.length > 0) {
-                category.textContent = products[0].art_category_level_2_name || 'Товары';
-                count.textContent = `${products.length} товаров`;
                 grid.innerHTML = products.map(createCard).join('');
             } else {
                 grid.innerHTML = '<div class="loading">Нет товаров</div>';
             }
         }
 
-        function switchModel(model) {
-            activeModel = model;
-            document.querySelectorAll('.model-tab').forEach(t => {
-                t.classList.toggle('active', t.dataset.model === model);
-            });
-            render(model === 'current' ? currentProducts : newProducts);
-        }
-
         async function init() {
             try {
-                const [res1, res2] = await Promise.all([
+                const [r1, r2] = await Promise.all([
                     fetch('data/current_model.csv'),
                     fetch('data/new_model.csv')
                 ]);
 
-                if (!res1.ok || !res2.ok) throw new Error('Failed to load CSV');
+                if (!r1.ok || !r2.ok) throw new Error('CSV load failed');
 
-                currentProducts = parseCSV(await res1.text());
-                newProducts = parseCSV(await res2.text());
+                const current = parseCSV(await r1.text());
+                const newP = parseCSV(await r2.text());
 
-                document.querySelectorAll('.model-tab').forEach(tab => {
-                    tab.addEventListener('click', () => switchModel(tab.dataset.model));
-                });
+                if (current.length > 0) {
+                    const cat = current[0].art_category_level_2_name || 'Покупайте за 1₽';
+                    document.getElementById('page-title').textContent = cat;
+                    document.getElementById('breadcrumb-category').textContent = cat;
+                }
 
-                render(currentProducts);
+                render(current, 'grid-current');
+                render(newP, 'grid-new');
             } catch (e) {
                 console.error(e);
-                document.getElementById('products-grid').innerHTML = '<div class="loading">Ошибка загрузки данных</div>';
+                document.getElementById('grid-current').innerHTML = '<div class="loading">Ошибка загрузки</div>';
+                document.getElementById('grid-new').innerHTML = '<div class="loading">Ошибка загрузки</div>';
             }
         }
 
